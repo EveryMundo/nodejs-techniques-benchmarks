@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-techniques-benchmarks",
+  "version": "0.0.0",
+  "description": "General benchmarks for common tasks written in nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EveryMundo/nodejs-techniques-benchmarks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EveryMundo/nodejs-techniques-benchmarks/issues"
+  },
+  "homepage": "https://github.com/EveryMundo/nodejs-techniques-benchmarks#readme",
+  "dependencies": {
+    "@everymundo/simple-logr": "^1.1.1",
+    "benchmark": "^2.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0"
+  }
+}
