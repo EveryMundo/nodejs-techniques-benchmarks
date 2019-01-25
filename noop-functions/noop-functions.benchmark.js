@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict';
 
 /* eslint-disable import/no-extraneous-dependencies, no-console */
@@ -14,7 +16,7 @@ const noop5 = new Function('');
 
 // add tests
 suite
-  .add(`promise`, () => new Promise((resolve) => setTimeout(resolve, 500)))
+  .add('promise', () => new Promise((resolve) => setTimeout(resolve, 500)))
   .add(`noop1 ${rpad(JSON.stringify(noop1.toString()), 33)}`, () => noop1())
   .add(`noop2 ${rpad(JSON.stringify(noop2.toString()), 33)}`, () => noop2())
   .add(`noop3 ${rpad(JSON.stringify(noop3.toString()), 33)}`, () => noop3())
