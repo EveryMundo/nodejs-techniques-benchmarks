@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-'use strict';
+'use strict'
 
 /* eslint-disable import/no-extraneous-dependencies, no-console */
-const suite    = require('../lib/bench');
-const { rpad } = require('../lib/string-helpers');
+const suite = require('../lib/bench')
+const { rpad } = require('../lib/string-helpers')
 
 // eslint-disable-next-line func-names
-const noop1 = function () {};
-const noop2 = function noop() {};
-const noop3 = () => {};
-const noop4 = () => undefined;
+const noop1 = function () {}
+const noop2 = function noop () {}
+const noop3 = () => {}
+const noop4 = () => undefined
 // eslint-disable-next-line no-new-func
-const noop5 = new Function('');
+const noop5 = new Function('')
 
 // add tests
 suite
@@ -24,4 +24,4 @@ suite
   .add(`noop5 ${rpad(JSON.stringify(noop5.toString()), 33)}`, () => noop5())
   .run({
     async: true
-  });
+  })
