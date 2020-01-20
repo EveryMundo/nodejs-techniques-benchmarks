@@ -2,6 +2,9 @@
 
 'use strict'
 
+// eslint-disable-next-line no-extend-native
+if (!Array.prototype.flatMap) Array.prototype.flatMap = function flatMap (f) { return this.reduce((acc, x) => acc.concat(f(x)), []) }
+
 /* eslint-disable import/no-extraneous-dependencies, no-console */
 const suite = require('../lib/bench')
 const clone = require('../lib/clone')
@@ -50,6 +53,8 @@ const departureAirportIataCodesRandom = departureAirportIataCodes.reduce((a, ite
 const builder01 = valitador => () => {
   for (let i = departureAirportIataCodesLength; i--;) {
     const orig = departureAirportIataCodesRandom[i]
+
+    valitador('orig', [])
 
     for (let j = arrivalAirportIataCodesLength; j--;) {
       if (!valitador(orig, arrivalAirportIataCodes[j])) {
@@ -102,14 +107,16 @@ const validateSimpleObjectIn = (orig, dest) => (`${orig}${dest}` in simpleObject
 
 const validateSimpleObjectValue = (orig, dest) => simpleObject[`${orig}${dest}`]
 
-const validateObjectWithListsDotIncludes = (orig, dest) => objectWithLists[orig].includes(dest)
+const emptyList = ''
+const validateObjectWithListsDotIncludes = (orig, dest) => (objectWithLists[orig] || emptyList).includes(dest)
 
 const validateObjectWithListsDotIndexOf = (orig, dest) => objectWithLists[orig] && objectWithLists[orig].indexOf(dest) !== -1
 const validateObjectWithListsDotIndexOfNoConst = (orig, dest) => objectWithLists[orig] && objectWithLists[orig].indexOf(dest) !== -1
 
 const validateObjectWithSetsDotHas = (orig, dest) => objectWithSets[orig] && objectWithSets[orig].has(dest)
 
-const validateMapsWithSetsDotHas = (orig, dest) => mapWithSets.get(orig).has(dest)
+const emptySet = new Set()
+const validateMapsWithSetsDotHas = (orig, dest) => (mapWithSets.get(orig) || emptySet).has(dest)
 
 const validateObjectWithStringDotIncludes = (orig, dest) => objectWithStrings[orig] && objectWithStrings[orig].includes(dest)
 
@@ -120,7 +127,7 @@ const validateObjectWithBufferDotIncludes = (orig, dest) => objectWithBuffers[or
 const validateObjectWithBufferDotIndexOf = (orig, dest) => orig in objectWithBuffers && objectWithBuffers[orig].indexOf(dest) !== -1
 
 const validateObjectWithObjectKeyIn = (orig, dest) => (objectWithObjects[orig] && objectWithObjects[orig][dest])
-const validateObjectWithObjectKeyIn2 = (orig, dest) => (objectWithObjects[orig] && dest in objectWithObjects[orig])
+const validateObjectWithObjectKeyIn2 = (orig, dest) => (orig in objectWithObjects && dest in objectWithObjects[orig])
 const validateObjectWithObjectKeyIn3 = (orig, dest) => (orig in objectWithObjectNulls && dest in objectWithObjectNulls[orig])
 
 const functions = [
@@ -157,19 +164,19 @@ Promise.all(functions.map((f) => {
       // .add(`${validateXimpleListsDotIndexOf.name}            `, builder(validateXimpleListsDotIndexOf))
       // .add(`${validateSimpleListsDotInclude.name}            `, builder(validateSimpleListsDotInclude))
       // .add(`${validateXimpleListsDotInclude.name}            `, builder(validateXimpleListsDotInclude))
-      .add(`${validateSimpleSetDotHas.name}                  `, builder(validateSimpleSetDotHas))
-      .add(`${validateObjectWithListsDotIndexOfNoConst.name} `, builder(validateObjectWithListsDotIndexOfNoConst))
-      .add(`${validateSimpleObjectUndefIn.name}              `, builder(validateSimpleObjectUndefIn))
-      .add(`${validateSimpleObjectIn.name}                   `, builder(validateSimpleObjectIn))
-      .add(`${validateSimpleObjectValue.name}                `, builder(validateSimpleObjectValue))
-      .add(`${validateObjectWithListsDotIncludes.name}       `, builder(validateObjectWithListsDotIncludes))
-      .add(`${validateObjectWithListsDotIndexOf.name}        `, builder(validateObjectWithListsDotIndexOf))
-      .add(`${validateObjectWithSetsDotHas.name}             `, builder(validateObjectWithSetsDotHas))
+      // .add(`${validateSimpleSetDotHas.name}                  `, builder(validateSimpleSetDotHas))
+      // .add(`${validateObjectWithListsDotIndexOfNoConst.name} `, builder(validateObjectWithListsDotIndexOfNoConst))
+      // .add(`${validateSimpleObjectUndefIn.name}              `, builder(validateSimpleObjectUndefIn))
+      // .add(`${validateSimpleObjectIn.name}                   `, builder(validateSimpleObjectIn))
+      // .add(`${validateSimpleObjectValue.name}                `, builder(validateSimpleObjectValue))
+      // .add(`${validateObjectWithListsDotIncludes.name}       `, builder(validateObjectWithListsDotIncludes))
+      // .add(`${validateObjectWithListsDotIndexOf.name}        `, builder(validateObjectWithListsDotIndexOf))
+      // .add(`${validateObjectWithSetsDotHas.name}             `, builder(validateObjectWithSetsDotHas))
       .add(`${validateMapsWithSetsDotHas.name}               `, builder(validateMapsWithSetsDotHas))
-      .add(`${validateObjectWithStringDotIncludes.name}      `, builder(validateObjectWithStringDotIncludes))
-      .add(`${validateObjectWithStringDotIndexOf.name}       `, builder(validateObjectWithStringDotIndexOf))
-      .add(`${validateObjectWithBufferDotIncludes.name}      `, builder(validateObjectWithBufferDotIncludes))
-      .add(`${validateObjectWithBufferDotIndexOf.name}       `, builder(validateObjectWithBufferDotIndexOf))
+      // .add(`${validateObjectWithStringDotIncludes.name}      `, builder(validateObjectWithStringDotIncludes))
+      // .add(`${validateObjectWithStringDotIndexOf.name}       `, builder(validateObjectWithStringDotIndexOf))
+      // .add(`${validateObjectWithBufferDotIncludes.name}      `, builder(validateObjectWithBufferDotIncludes))
+      // .add(`${validateObjectWithBufferDotIndexOf.name}       `, builder(validateObjectWithBufferDotIndexOf))
       .add(`${validateObjectWithObjectKeyIn.name}            `, builder(validateObjectWithObjectKeyIn))
       .add(`${validateObjectWithObjectKeyIn2.name}           `, builder(validateObjectWithObjectKeyIn2))
       .add(`${validateObjectWithObjectKeyIn3.name}           `, builder(validateObjectWithObjectKeyIn3))
