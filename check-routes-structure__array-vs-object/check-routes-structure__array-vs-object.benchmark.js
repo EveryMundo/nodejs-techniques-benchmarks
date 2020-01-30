@@ -47,7 +47,21 @@ const validateSimpleListsDotIndexOf = () => {
 
     for (let j = arrivalAirportIataCodesLength; j--;) {
       const dest = arrivalAirportIataCodes[j]
-      if (!simpleList.indexOf(`${orig}${dest}`) === -1) {
+      if (!simpleList.indexOf(orig + dest) === -1) {
+        throw new Error(`houston we have a problem with ${objectWithLists}`)
+      }
+    }
+  }
+}
+
+const validateSimpleListsDotIndexOf2 = () => {
+  for (let i = departureAirportIataCodesLength; i--;) {
+    const orig = departureAirportIataCodesRandom[i]
+
+    for (let j = arrivalAirportIataCodesLength; j--;) {
+      const route = orig + arrivalAirportIataCodes[j]
+      // Number(route)
+      if (!simpleList.indexOf(route) === -1) {
         throw new Error(`houston we have a problem with ${objectWithLists}`)
       }
     }
@@ -59,7 +73,7 @@ const validateSimpleSetDotHas = () => {
     const orig = departureAirportIataCodesRandom[i]
 
     for (let j = arrivalAirportIataCodesLength; j--;) {
-      if (!simpleSet.has(`${orig}${arrivalAirportIataCodes[j]}`) === -1) {
+      if (!simpleSet.has(orig + arrivalAirportIataCodes[j]) === -1) {
         throw new Error(`houston we have a problem with ${objectWithLists}`)
       }
     }
@@ -71,7 +85,7 @@ const validateSimpleObjectUndefIn = () => {
     const orig = departureAirportIataCodesRandom[i]
 
     for (let j = arrivalAirportIataCodesLength; j--;) {
-      if (!(`${orig}${arrivalAirportIataCodes[j]}` in simpleObjectUndef)) {
+      if (!(orig + arrivalAirportIataCodes[j] in simpleObjectUndef)) {
         throw new Error(`houston we have a problem with ${objectWithLists}`)
       }
     }
@@ -83,7 +97,7 @@ const validateSimpleObjectIn = () => {
     const orig = departureAirportIataCodesRandom[i]
 
     for (let j = arrivalAirportIataCodesLength; j--;) {
-      if (!(`${orig}${arrivalAirportIataCodes[j]}` in simpleObject)) {
+      if (!(orig + arrivalAirportIataCodes[j] in simpleObject)) {
         throw new Error(`houston we have a problem with ${objectWithLists}`)
       }
     }
@@ -95,7 +109,7 @@ const validateSimpleObjectValue = () => {
     const orig = departureAirportIataCodesRandom[i]
 
     for (let j = arrivalAirportIataCodesLength; j--;) {
-      if (!simpleObject[`${orig}${arrivalAirportIataCodes[j]}`]) {
+      if (!simpleObject[orig + arrivalAirportIataCodes[j]]) {
         throw new Error(`houston we have a problem with ${objectWithLists}`)
       }
     }
@@ -313,8 +327,9 @@ Promise.all(functions.map((f) => {
   .then(() => {
     // add tests
     suite
-      .add(`${validateSimpleSetDotHas.name}            `, () => validateSimpleSetDotHas())
+      // .add(`${validateSimpleSetDotHas.name}            `, () => validateSimpleSetDotHas())
       .add(`${validateSimpleListsDotIndexOf.name}      `, () => validateSimpleListsDotIndexOf())
+      .add(`${validateSimpleListsDotIndexOf2.name}      `, () => validateSimpleListsDotIndexOf2())
       .add(`${validateWithListsDotIndexOfNoConst.name} `, () => validateWithListsDotIndexOfNoConst())
       .add(`${validateWithObjectKeyInNoVar.name}       `, () => validateWithObjectKeyInNoVar())
       .add(`${validateSimpleObjectUndefIn.name}        `, () => validateSimpleObjectUndefIn())

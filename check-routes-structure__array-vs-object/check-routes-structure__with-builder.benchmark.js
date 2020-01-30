@@ -16,8 +16,8 @@ arrivalAirportIataCodes.sort()
 const arrivalAirportIataCodesLength = arrivalAirportIataCodes.length
 const objectInnerStructure = arrayToObject(arrivalAirportIataCodes)
 const objectInnerStructureNulls = arrayToObject(arrivalAirportIataCodes, null)
-const departureAirportIataCodes = arrivalAirportIataCodes.slice(100, 110)
-const departureAirportIataCodesLength = departureAirportIataCodes.length
+const departureAirportIataCodes = arrivalAirportIataCodes.map(iataCode => iataCode) // .slice(100, 110)
+const departureAirportIataCodesLength = 10 // departureAirportIataCodes.length
 
 const objectWithLists = departureAirportIataCodes.reduce((o, code) => (o[code] = clone(arrivalAirportIataCodes)) && o, {})
 const simpleList = departureAirportIataCodes.flatMap(orig => arrivalAirportIataCodes.map(dest => `${orig}${dest}`))// .sort();
@@ -40,15 +40,9 @@ console.log({
   departureAirportIataCodes: departureAirportIataCodes.length
 })
 
-const departureAirportIataCodesRandom = departureAirportIataCodes.reduce((a, item) => {
-  if (Math.random() > 0.49) {
-    a.push(item)
-  } else {
-    a.unshift(item)
-  }
-
-  return a
-}, [])
+const departureAirportIataCodesRandom = departureAirportIataCodes
+  .map(x => x)
+  .sort(() => (Math.random() > 0.49) ? -1 : 1)
 
 const builder01 = valitador => () => {
   for (let i = departureAirportIataCodesLength; i--;) {
@@ -92,7 +86,27 @@ const builder03 = valitador => () => {
   }
 }
 
-const builder = builder01
+const NUM_DEP = Math.abs(process.env.NUM_DEP) || 10
+const NUM_ARR = Math.abs(process.env.NUM_ARR) || 30
+const sampleDepartures = departureAirportIataCodesRandom.slice(0, NUM_DEP)
+sampleDepartures.push('ZZZ')
+const sampleArrivals = departureAirportIataCodesRandom.slice(0, NUM_ARR)
+sampleArrivals.push('YYY')
+
+const builderWithSample = valitador => () => {
+  let orig
+  for (let i = sampleDepartures.length; i--;) {
+    orig = sampleDepartures[i]
+    for (let j = sampleArrivals.length; j--;) {
+      if (!valitador(orig, sampleArrivals[j])) {
+        throw new Error(`houston we have a problem with ${objectWithLists}`)
+      }
+    }
+  }
+}
+
+// const builder = builder01
+const builder = builderWithSample
 
 const validateSimpleListsDotIndexOf = (orig, dest) => simpleList.indexOf(`${orig}${dest}`) !== -1
 const validateSimpleListsDotInclude = (orig, dest) => simpleList.includes(`${orig}${dest}`)
