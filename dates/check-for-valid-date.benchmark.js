@@ -14,6 +14,7 @@ const numberIsNaN = (d) => Number.isNaN(+d)
 const numberIsNaN2 = (d) => Number.isNaN(d.getTime())
 const invalidDate = (d) => '' + d === 'Invalid Date'
 const invalidDateStr = (d) => d.toString() === 'Invalid Date'
+const invalidDateJSON = (d) => d.toJSON() === null
 
 assert(globalIsNaN(new Date()) === false, 'globalIsNaN fail the test')
 assert(globalIsNaN(new Date('some invalid date')) === true, 'globalIsNaN fail the test')
@@ -36,6 +37,10 @@ suite
   .add('invalidDateStr', () => {
     invalidDateStr(new Date())
     invalidDateStr(new Date('some invalid date'))
+  })
+  .add('invalidDateJSON', () => {
+    invalidDateJSON(new Date())
+    invalidDateJSON(new Date('some invalid date'))
   })
   .add('numberIsNaN', () => {
     numberIsNaN(new Date())

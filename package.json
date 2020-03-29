@@ -18,13 +18,13 @@
   },
   "homepage": "https://github.com/EveryMundo/nodejs-techniques-benchmarks#readme",
   "dependencies": {
-    "@everymundo/simple-logr": "^2.0.4",
-    "benchmark": "^2.1.4"
+    "benchmark": "^2.1.4",
+    "pino-pretty": "^3.6.1"
   },
   "devDependencies": {
+    "@everymundo/simple-logr": "^2.2.4",
     "ghooks": "^2.0.4",
     "microtime": "^3.0.0",
-    "pino-pretty": "^3.5.0",
-    "standard": "^14.3.1"
+    "standard": "^14.3.3"
   }
 }

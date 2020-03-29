@@ -16,6 +16,74 @@ const globalPassenger = {
   infantInSeatCount: 0
 }
 // eslint-disable-next-line func-names
+const getpassengerDetails0 = (passenger) => {
+  const passDetails = []
+
+  for (const key in passenger) {
+    if (passenger.hasOwnProperty(key)) {
+      if (key === 'count') continue
+      const element = +passenger[key]
+      if (element > 0) {
+        const detail = {
+          category: null,
+          mappedTo: null,
+          count: 0
+        }
+        switch (key) {
+          case 'adultCount': detail.category = 'Adult 15+'
+            break
+          case 'childCount': detail.category = 'Children 2 - 11'
+            break
+          case 'infantCount': detail.category = 'Infant up to 2'
+            break
+          case 'youngAdultCount': detail.category = 'Young Adult 12 - 15'
+            break
+          default: detail.category = key
+            break
+        }
+        detail.mappedTo = key
+        detail.count = element
+        passDetails.push(detail)
+      }
+    }
+  }
+
+  return passDetails
+}
+
+const getpassengerDetailsD = (passenger) => {
+  const passDetails = []
+
+  for (const key in passenger) {
+    if (key === 'count') continue
+    const element = +passenger[key]
+    if (element > 0) {
+      const detail = {
+        category: null,
+        mappedTo: null,
+        count: 0
+      }
+      switch (key) {
+        case 'adultCount': detail.category = 'Adult 15+'
+          break
+        case 'childCount': detail.category = 'Children 2 - 11'
+          break
+        case 'infantCount': detail.category = 'Infant up to 2'
+          break
+        case 'youngAdultCount': detail.category = 'Young Adult 12 - 15'
+          break
+        default: detail.category = key
+          break
+      }
+      detail.mappedTo = key
+      detail.count = element
+      passDetails.push(detail)
+    }
+  }
+
+  return passDetails
+}
+
 const getpassengerDetails1 = (passenger) => {
   const passDetails = []
 
@@ -47,7 +115,21 @@ const getpassengerDetails1 = (passenger) => {
       }
     }
   }
+
   return passDetails
+}
+
+const objectKeys = (o) => {
+  const arr = []
+  // const hasOwnProperty = Object.prototype.hasOwnProperty.bind(o)
+  for (const key in o) {
+    // if (hasOwnProperty(key)) {
+    if (o.hasOwnProperty(key)) {
+      arr.push(key)
+    }
+  }
+
+  return arr
 }
 
 const getpassengerDetails2 = (passenger) => {
@@ -327,7 +409,48 @@ const getpassengerDetailsA = (passenger) => {
   return passDetails
 }
 
+const getpassengerDetailsB = (passenger) => {
+  const passDetails = []
+
+  let element, key
+  const keys = Object.keys(passenger)
+  for (let i = 0; i < keys.length; i++) {
+    key = keys[i]
+    if (key !== 'count' && (element = +passenger[key]) > 0) {
+      passDetails.push({
+        category: categoriesMap.get(key) || key,
+        mappedTo: key,
+        count: element
+      })
+    }
+  }
+
+  return passDetails
+}
+
+const getpassengerDetailsC = (passenger) => {
+  const passDetails = []
+
+  let element, key
+  const keys = objectKeys(passenger)
+  for (let i = 0; i < keys.length; i++) {
+    key = keys[i]
+    if (key !== 'count' && (element = +passenger[key]) > 0) {
+      passDetails.push({
+        category: categoriesMap.get(key) || key,
+        mappedTo: key,
+        count: element
+      })
+    }
+  }
+
+  return passDetails
+}
+
 const expected = '[{"category":"Adult 15+","mappedTo":"adultCount","count":1}]'
+
+const t0 = JSON.stringify(getpassengerDetails0(globalPassenger))
+assert(t0 === expected, `getpassengerDetails fail the test t0[${t0}] !== expected[${expected}]`)
 
 const t1 = JSON.stringify(getpassengerDetails1(globalPassenger))
 assert(t1 === expected, `getpassengerDetails fail the test t1[${t1}] !== expected[${expected}]`)
@@ -359,18 +482,31 @@ assert(t9 === expected, `getpassengerDetails9 fail the test t9[${t9}] !== expect
 const tA = JSON.stringify(getpassengerDetailsA(globalPassenger))
 assert(tA === expected, `getpassengerDetailsA fail the test tA[${tA}] !== expected[${expected}]`)
 
+const tB = JSON.stringify(getpassengerDetailsB(globalPassenger))
+assert(tB === expected, `getpassengerDetailsB fail the test tB[${tB}] !== expected[${expected}]`)
+
+const tC = JSON.stringify(getpassengerDetailsC(globalPassenger))
+assert(tC === expected, `getpassengerDetailsC fail the test tC[${tC}] !== expected[${expected}]`)
+
+const tD = JSON.stringify(getpassengerDetailsD(globalPassenger))
+assert(tD === expected, `getpassengerDetailsD fail the test tD[${tD}] !== expected[${expected}]`)
+
 // add tests
 suite
-  // .add('getpassengerDetails1', () => { getpassengerDetails1(globalPassenger) })
-  // .add('getpassengerDetails2', () => { getpassengerDetails2(globalPassenger) })
+  .add('getpassengerDetails0', () => { getpassengerDetails0(globalPassenger) })
+  .add('getpassengerDetails1', () => { getpassengerDetails1(globalPassenger) })
+  .add('getpassengerDetails2', () => { getpassengerDetails2(globalPassenger) })
   .add('getpassengerDetails3', () => { getpassengerDetails3(globalPassenger) })
-  .add('getpassengerDetails4', () => { getpassengerDetails4(globalPassenger) })
+  // .add('getpassengerDetails4', () => { getpassengerDetails4(globalPassenger) })
   // .add('getpassengerDetails5', () => { getpassengerDetails5(globalPassenger) })
-  .add('getpassengerDetails6', () => { getpassengerDetails6(globalPassenger) })
-  .add('getpassengerDetails7', () => { getpassengerDetails7(globalPassenger) })
-  .add('getpassengerDetails8', () => { getpassengerDetails8(globalPassenger) })
-  .add('getpassengerDetails9', () => { getpassengerDetails9(globalPassenger) })
+  // .add('getpassengerDetails6', () => { getpassengerDetails6(globalPassenger) })
+  // .add('getpassengerDetails7', () => { getpassengerDetails7(globalPassenger) })
+  // .add('getpassengerDetails8', () => { getpassengerDetails8(globalPassenger) })
+  // .add('getpassengerDetails9', () => { getpassengerDetails9(globalPassenger) })
   .add('getpassengerDetailsA', () => { getpassengerDetailsA(globalPassenger) })
+  .add('getpassengerDetailsB', () => { getpassengerDetailsB(globalPassenger) })
+  .add('getpassengerDetailsC', () => { getpassengerDetailsC(globalPassenger) })
+  .add('getpassengerDetailsD', () => { getpassengerDetailsD(globalPassenger) })
   .run({
     async: true
   })
