@@ -143,6 +143,7 @@ suite
   .add(`${storeDateInAConstBFilter.name} `, storeDateInAConstBFilter)
   .add(`${storeDateInAConstBFilterB.name} `, storeDateInAConstBFilterB)
   .add(`${storeDateInAConstBFilterC.name} `, storeDateInAConstBFilterC)
-  .run({
-    async: false
-  })
+
+module.exports = () => suite.run({ async: true })
+
+if (require.main === module) module.exports()

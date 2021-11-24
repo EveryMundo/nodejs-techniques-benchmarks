@@ -16,6 +16,7 @@ const microNow = () => { micro.now() }
 suite
   .add('Date.now', dateNow)
   .add('microNow', microNow)
-  .run({
-    async: true
-  })
+
+module.exports = () => suite.run({ async: true })
+
+if (require.main === module) module.exports()
