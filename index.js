@@ -1,5 +1,5 @@
 const handler = (event, context) => {
-  require(event.benchmark)
+  require(`${event.benchmark}.js`)()
 }
 
 module.exports = { handler }

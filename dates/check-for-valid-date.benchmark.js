@@ -54,6 +54,7 @@ suite
     globalIsNaN(new Date())
     globalIsNaN(new Date('some invalid date'))
   })
-  .run({
-    async: true
-  })
+
+module.exports = () => suite.run({ async: true })
+
+if (require.main === module) module.exports()
