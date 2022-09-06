@@ -7,8 +7,7 @@ const assert = require('assert')
 
 const suite = require('../lib/bench')
 
-// eslint-disable-next-line func-names
-
+// eslint-disable-next-line func-names, camelcase
 function flatObject_continue (o, _ret, _prefix) {
   if (!o) return o
 
@@ -32,6 +31,7 @@ function flatObject_continue (o, _ret, _prefix) {
   return ret
 }
 
+// eslint-disable-next-line func-names, camelcase
 function flatObject_else (o, _ret, _prefix) {
   if (!o) return o
 
@@ -54,6 +54,7 @@ function flatObject_else (o, _ret, _prefix) {
   return ret
 }
 
+// eslint-disable-next-line func-names, camelcase
 function flatObject_else2 (o, ret = {}, prefix = '') {
   if (!o) return o
 
@@ -74,6 +75,7 @@ function flatObject_else2 (o, ret = {}, prefix = '') {
   return ret
 }
 
+// eslint-disable-next-line func-names, camelcase
 function flatObject_else3 (o, ret = {}, prefix = '') {
   if (!o) return o
 
@@ -96,6 +98,7 @@ function flatObject_else3 (o, ret = {}, prefix = '') {
   return ret
 }
 
+// eslint-disable-next-line func-names, camelcase
 function flatObject_else5 (o, ret = {}, prefix = '') {
   if (!o) return o
 
@@ -120,6 +123,7 @@ function flatObject_else5 (o, ret = {}, prefix = '') {
   return ret
 }
 
+// eslint-disable-next-line func-names, camelcase
 function flatObject_else4 (o, ret = {}, prefix = '') {
   if (!o) return o
 
